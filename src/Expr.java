@@ -2,8 +2,8 @@ package src;
 
 abstract class Expr {
     /*
-     *  Part 1: implement the eval function for all
-     *  non-abstract subclasses of Expr
+     * Part 1: implement the eval function for all
+     * non-abstract subclasses of Expr
      */
     abstract float eval();
 
@@ -35,11 +35,31 @@ class PlusExpr extends BinaryExpr {
     public PlusExpr(Expr e1, Expr e2) {
         super(e1, e2);
     }
+
+    @Override
+    public float eval() {
+        return getE1().eval() + getE2().eval();
+    }
+
+    @Override
+    public <R> R accept(ExprVisitor<R> v) {
+        return v.visit(this);
+    }
 }
 
 class MinusExpr extends BinaryExpr {
     public MinusExpr(Expr e1, Expr e2) {
         super(e1, e2);
+    }
+
+    @Override
+    public float eval() {
+        return getE1().eval() - getE2().eval();
+    }
+
+    @Override
+    public <R> R accept(ExprVisitor<R> v) {
+        return v.visit(this);
     }
 }
 
@@ -47,11 +67,31 @@ class TimesExpr extends BinaryExpr {
     public TimesExpr(Expr e1, Expr e2) {
         super(e1, e2);
     }
+
+    @Override
+    public float eval() {
+        return getE1().eval() * getE2().eval();
+    }
+
+    @Override
+    public <R> R accept(ExprVisitor<R> v) {
+        return v.visit(this);
+    }
 }
 
 class DivExpr extends BinaryExpr {
     public DivExpr(Expr e1, Expr e2) {
         super(e1, e2);
+    }
+
+    @Override
+    public float eval() {
+        return getE1().eval() / getE2().eval();
+    }
+
+    @Override
+    public <R> R accept(ExprVisitor<R> v) {
+        return v.visit(this);
     }
 }
 
@@ -60,5 +100,15 @@ class FloatExpr extends Expr {
 
     public FloatExpr(float f) {
         this.literal = f;
+    }
+
+    @Override
+    public float eval() {
+        return literal;
+    }
+
+    @Override
+    public <R> R accept(ExprVisitor<R> v) {
+        return v.visit(this);
     }
 }
